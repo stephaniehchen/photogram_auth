@@ -1,0 +1,22 @@
+<div class="page-header">
+  <h3>User #<%= @user.id %></h3>
+</div>
+
+<div class="row">
+  <div class="col-md-12 mb-2">
+    <dl class="dl-horizontal">
+      <dt>Photos</dt>
+      <dd>
+        <ul class="list-group">
+            <% Photo.where(:user_id => @user.id).each do |photo| %>
+                <li class="list-group-item">
+                  <img src="<%=photo.image%>">
+                    <%= photo.caption %>
+                  </a>
+                </li>
+            <% end %>
+          </li>
+        </ul>
+      </dd>
+    </dl>
+</div>
