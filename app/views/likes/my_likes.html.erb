@@ -1,0 +1,29 @@
+<div class="page-header">
+  <h3><%= current_user.username %> Likes</h3>
+</div>
+<div class="row">
+  <div class="col-md-12 mb-2">
+    <dl class="dl-horizontal">
+  <% @like.each do |like|%>
+    <div class="row">
+      <div class="col-md-8 col-md-offset-2">
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <h3 class="panel-title">
+              <%= like.caption %>
+              <small>
+                <%= time_ago_in_words(like.created_at) %>
+              </small>
+            </h3>
+          </div>
+
+          <div class="panel-body">
+              <img src="<%= like.image %>" class="img-responsive">
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  <% end %>
+</div>
+</dl>

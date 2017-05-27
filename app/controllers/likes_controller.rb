@@ -1,14 +1,14 @@
 class LikesController < ApplicationController
-  def index
-    @likes = Like.all
-
-    render("likes/index.html.erb")
-  end
+#  def index
+#    @likes = Like.find(:user_id => current_user.id)
+#    @photos = Photo.find_by(:user_id => current_user.id)
+#    render("likes/index.html.erb")
+#  end
 
   def show
-    @like = Like.find(params[:id])
-
-    render("likes/show.html.erb")
+    @like = Like.where(:user_id => current_user.id)
+    @photo = Photo.all
+    render("likes/my_likes.html.erb")
   end
 
   def new
@@ -26,10 +26,16 @@ class LikesController < ApplicationController
     save_status = @like.save
 
     if save_status == true
-      redirect_to("/likes/#{@like.id}", :notice => "Like created successfully.")
+      redirect_to("/photos/#{@like.photo_id}", :notice => "Like created successfully.")
     else
       render("likes/new.html.erb")
     end
+###NOT USED###
+    #if save_status == true
+    #  redirect_to("/likes/#{@like.id}", :notice => "Like created successfully.")
+    #else
+    #  render("likes/new.html.erb")
+    #end
   end
 
   def edit

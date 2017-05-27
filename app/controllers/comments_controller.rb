@@ -14,7 +14,7 @@ class CommentsController < ApplicationController
   def new
     @comment = Comment.new
 
-    render("comments/new.html.erb")
+    redirect_to("/photos")
   end
 
   def create

@@ -1,13 +1,13 @@
 class PhotosController < ApplicationController
   def index
     @photos = Photo.all
-
+    @likes = Like.all
     render("photos/index.html.erb")
   end
 
   def show
     @photo = Photo.find(params[:id])
-
+    @user = User.all
     render("photos/show.html.erb")
   end
 
