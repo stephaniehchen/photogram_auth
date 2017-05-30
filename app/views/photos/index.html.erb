@@ -1,9 +1,8 @@
-<div class="page-header">
-  <h1>
-    Photos
-    <a href="/photos/new" class="btn btn-lg btn-success">New Photo</a>
-  </h1>
-</div>
+<a href="/photos/new" class="btn btn-default btn-block">
+    <i class="fa fa-plus"></i>
+  </a>
+
+  <hr>
 
 <% @photos.each do |photo| %>
 <div class="row">
@@ -13,7 +12,7 @@
         <h3 class="panel-title">
           <a href="/users/<%=photo.user_id%>"><%=User.find_by(:id => photo.user_id).username%></a>
           <small>
-            <%=time_ago_in_words(photo.created_at)%>
+            <%=time_ago_in_words(photo.created_at)%> ago
           </small>
         </h3>
       </div>
@@ -47,12 +46,29 @@
               <h6 class="media-heading">
                 <a href="/users/<%=photo.user_id%>"><%=User.find_by(:id => photo.user_id).username%></a>
                 <small>
-                  <%=time_ago_in_words(photo.created_at)%>
+                  <%=time_ago_in_words(photo.created_at)%> ago
                 </small>
               </h6>
               <%=photo.caption%>
             </div>
           </li>
+
+  <% photo.comments.each do |comment| %>
+
+  <ul class="media-list">
+
+    <li class="media">
+      <div class="media-body">
+        <h6 class="media-heading">
+          <a href="/users/<%=comment.user_id%>"><%=User.find_by(:id => comment.user_id).username%></a>
+          <small>
+            <%=time_ago_in_words(comment.created_at)%> ago
+          </small>
+        </h6>
+        <%=comment.body%>
+      </div>
+    </li>
+    <%end%>
 
 
           <li class="media">
@@ -63,7 +79,7 @@
 
                 <input type="hidden" name="photo_id" value="<%=photo.id%>">
 
-                <input type="hidden" name="user_id" value="<%=photo.user_id%>">
+                <input type="hidden" name="user_id" value="<%=current_user.id%>">
 
                 <!-- Label and input for body -->
                 <div class="form-group">
@@ -85,9 +101,27 @@
             </div>
           </li>
         </ul>
+        <%if current_user.photos.ids.include? photo.id %>
+        <div class="btn-group btn-group-justified">
+          <a href="/photos" class="btn btn-primary">
+            <i class="fa fa-chevron-left"></i>
+          </a>
+          <a href="/photos/<%photo.id%>/edit" class="btn btn-warning">
+           <i class="fa fa-edit"></i>
+          </a>
+          <a href="/delete_photo/<%photo.id%>" class="btn btn-danger" rel="nofollow">
+            <i class="fa fa-trash-o"></i>
+          </a>
+        </div>
+        <%else%>
+        <div class="btn-group btn-group-justified">
+         <a href="/photos" class="btn btn-primary">
+           <i class="fa fa-chevron-left"></i>
+         </a>
+       </div>
+       <%end%>
       </div>
     </div>
   </div>
 </div>
-
 <%end%>
